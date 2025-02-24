@@ -16,3 +16,6 @@ and get recommendations for similar books based on their descriptions. The front
 - **Frontend**: Bootstrap, HTML, CSS
 - **Database**: SQLite (can be replaced with any relational database)
 - **Recommendation Engine**: `scikit-learn` (TF-IDF, cosine similarity)
+
+![Application Screenshot](main_page.png)
+![Application Screenshot](book_with_recommended_books.png)
