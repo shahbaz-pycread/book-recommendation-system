@@ -1,0 +1,38 @@
+{% extends 'books/base.html' %}
+
+{% block title %}
+    {{ book.title }} - Details
+{% endblock %}
+
+{% block content %}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h1 class="card-title">{{ book.title }}</h1>
+            <h5 class="card-subtitle mb-2 text-muted">By {{ book.author }}</h5>
+            <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
+            <p class="card-text"><strong>Description:</strong> {{ book.description }}</p>
+            <p class="card-text"><strong>Rating:</strong> {{ book.rating }}/5</p>
+        </div>
+    </div>
+
+    <!-- Recommended Books Section -->
+    <div class="mt-5">
+        <h2>Recommended Books</h2>
+        <div class="row">
+            {% for recommended_book in recommended_books %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ recommended_book.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">By {{ recommended_book.author }}</h6>
+                        <p class="card-text">{{ recommended_book.description|truncatewords:20 }}</p>
+                        <a href="{% url 'book_detail' recommended_book.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No recommendations available.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
