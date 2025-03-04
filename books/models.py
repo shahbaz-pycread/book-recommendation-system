@@ -8,6 +8,7 @@ class Book(models.Model):
     description = models.TextField()
     genre = models.CharField(max_length=100)
     rating = models.FloatField()
+    image = models.ImageField(upload_to = 'books/', null=True)
     
     def __str__(self):
         return self.title
