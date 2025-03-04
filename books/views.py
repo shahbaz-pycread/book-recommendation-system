@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book, UserRating
 from .recommendations import recommend_books
-from .forms import RatingForm
+from .forms import RatingForm, SignUpForm
+from django.contrib.auth import login, authenticate
 # Create your views here.
 
 def books_list(request):
@@ -39,3 +40,19 @@ def book_detail(request, book_id):
     }
     return render(request, 'books/book_detail.html', context)
 
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request,user)
+            return redirect('book_detail') # Redirect to book list after signup
+    else:
+        form = SignUpForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'registration/signup.html', context)
