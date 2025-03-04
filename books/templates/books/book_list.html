@@ -8,6 +8,11 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
+                    {% if book.image %}
+                        <img src="{{ book.image.url }}" alt="{{ book.title }}" class="img-fluid mb-3">
+                    {% else %}
+                        <img src="https://via.placeholder.com/150" alt="Placeholder image" class="img-fluid mb-3">
+                    {% endif %}
                     <h5 class="card-title">{{ book.title }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">By {{ book.author }}</h6>
                     <p class="card-text">{{ book.description|truncatewords:10 }}</p>
