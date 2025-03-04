@@ -15,6 +15,18 @@
         </div>
     </div>
 
+    <h3 class="text-white mt-4">User Ratings and Comments</h3>
+    <ul class="list-group">
+        {% for rating in book.userrating_set.all %}
+        <li class="list-group-item">
+            <p><strong>{{ rating.user.username }}</strong> rated it {{ rating.rating }}/5</p>
+            <p><em>{{ rating.comment }}</em></p>
+        </li>
+        {% empty %}
+        <p>No ratings yet for this book.</p>
+        {% endfor %}
+    </ul>
+
     <!-- Recommended Books Section -->
     <div class="mt-5">
         <h2>Recommended Books</h2>
