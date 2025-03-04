@@ -1,5 +1,5 @@
 {% extends 'books/base.html' %}
-
+{% load widget_tweaks %}
 {% block title %}
     {{ book.title }} - Details
 {% endblock %}
@@ -16,14 +16,26 @@
     </div>
 
     <!-- Form to submit rating -->
-    <h3>Rate This Book</h3>
+    <h3 class="mt-2">Rate This Book</h3>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Submit Rating</button>
+        {% for hidden in form.hidden_fields %}
+  {{ hidden }}
+{% endfor %}
+
+{% for field in form.visible_fields %}
+  <div class="form-group">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field|add_class:'form-control' }}
+    {% for error in field.errors %}
+      <span class="help-block">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endfor %}
+        <button type="submit" class="btn btn-primary mt-2">Submit Rating</button>
     </form>
 
-    <h3>User Ratings and Comments</h3>
+    <h3 class='mt-2'>User Ratings and Comments</h3>
     <ul class="list-group">
         {% for rating in ratings %}
         <li class="list-group-item">
