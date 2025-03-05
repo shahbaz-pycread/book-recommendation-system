@@ -16,26 +16,30 @@
     </div>
 
     <!-- Form to submit rating -->
-    <h3 class="mt-2">Rate This Book</h3>
+    <h3 class="mt-2 text-white">Rate This Book</h3>
+    {% if user.is_authenticated %}
     <form method="POST">
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
-  {{ hidden }}
-{% endfor %}
+            {{ hidden }}
+        {% endfor %}
 
-{% for field in form.visible_fields %}
-  <div class="form-group">
-    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-    {{ field|add_class:'form-control' }}
-    {% for error in field.errors %}
-      <span class="help-block">{{ error }}</span>
-    {% endfor %}
-  </div>
-{% endfor %}
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:'form-control' }}
+            {% for error in field.errors %}
+            <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endfor %}
         <button type="submit" class="btn btn-primary mt-2">Submit Rating</button>
     </form>
+    {% else %}
 
-    <h3 class='mt-2'>User Ratings and Comments</h3>
+    <p><a href="{% url 'login' %}">Log in</a> or <a href="{% url 'signup' %}">sign up</a> to leave a rating and comment.</p>
+    {% endif %}
+    <h3 class="mt-4 text-white">User Ratings and Comments</h3>
     <ul class="list-group">
         {% for rating in ratings %}
         <li class="list-group-item">
@@ -43,7 +47,7 @@
             <p><em>{{ rating.comment }}</em></p>
         </li>
         {% empty %}
-        <p>No ratings yet for this book.</p>
+        <p class="text-white">No ratings yet for this book.</p>
         {% endfor %}
     </ul>
 
