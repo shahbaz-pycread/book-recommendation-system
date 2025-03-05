@@ -3,6 +3,7 @@ from .models import Book, UserRating
 from .recommendations import recommend_books
 from .forms import RatingForm, SignUpForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def books_list(request):
@@ -12,6 +13,7 @@ def books_list(request):
     }
     return render(request,'books/book_list.html',context)
 
+@login_required
 def book_detail(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
@@ -49,10 +51,10 @@ def signup_view(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request,user)
-            return redirect('book_detail') # Redirect to book list after signup
+            return redirect('all_books') # Redirect to book list after signup
     else:
         form = SignUpForm()
     context = {
         'form' : form
     }
-    return render(request, 'registration/signup.html', context)
+    return render(request, 'books/registration/signup.html', context)
