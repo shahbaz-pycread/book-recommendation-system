@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Book, UserRating
 from .recommendations import recommend_books
-from .forms import RatingForm, SignUpForm
+from .forms import RatingForm, SignUpForm, BookForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -58,3 +58,17 @@ def signup_view(request):
         'form' : form
     }
     return render(request, 'books/registration/signup.html', context)
+
+@login_required
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save() # Save the book to the database
+            return redirect('all_books') # Redirect to the book list after adding the book
+    else:
+        form = BookForm()
+    context = {
+        'form' : form
+    }
+    return render(request,'books/add_book.html',context)
