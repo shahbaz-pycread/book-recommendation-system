@@ -5,15 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card mt-4">
-        <div class="card-body">
-            <h1 class="card-title">{{ book.title }}</h1>
-            <h5 class="card-subtitle mb-2 text-muted">By {{ book.author }}</h5>
-            <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
-            <p class="card-text"><strong>Description:</strong> {{ book.description }}</p>
-            <p class="card-text"><strong>Rating:</strong> {{ book.rating }}/5</p>
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="row g-0">
+            <!-- If you have a book image, you can display it here -->
+            {% if book.image %}
+            <div class="col-md-4">
+                <img src="{{ book.image.url }}" class="img-fluid rounded-start" alt="{{ book.title }}">
+            </div>
+            {% endif %}
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h1 class="card-title">{{ book.title }}</h1>
+                    <h5 class="card-subtitle mb-2 text-muted">By {{ book.author }}</h5>
+                    <p class="card-text"><strong>Genre:</strong> {{ book.genre }}</p>
+                    <p class="card-text"><strong>Description:</strong> {{ book.description }}</p>
+                    <p class="card-text"><strong>Rating:</strong> {{ book.rating }}/5</p>
+                    <!-- Button for user actions (like going back or editing) -->
+                    <a href="{% url 'all_books' %}" class="btn btn-primary mt-3">Back to Book List</a>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
     <!-- Form to submit rating -->
     <h3 class="mt-2 text-white">Rate This Book</h3>
