@@ -10,7 +10,13 @@
                     <a class="nav-link" href="{% url 'add-book' %}">Add Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                    <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
                 </li>
             {% else %}
                 <li class="nav-item">
