@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def books_list(request):
-    books = Book.objects.all()
+    books = Book.objects.all().order_by('-id')
     context = {
         'books' : books
     }
